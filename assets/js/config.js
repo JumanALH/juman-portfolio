@@ -17,8 +17,7 @@ window.SITE = {
   linkedin: "https://www.linkedin.com/in/juman-al-huthaili-762200325/",
 
   // --- Where the site lives -------------------------------
-  // This assumes the repo is named "juman-portfolio", which makes
-  // Vercel generate juman-portfolio.vercel.app. If your real URL
-  // is different, run:  bash set-site-url.sh https://your-url
-  siteUrl: "https://juman-portfolio.vercel.app"
+  // This is the Render static site for the "juman-portfolio" repo.
+  // If your real URL is different, run:  bash set-site-url.sh https://your-url
+  siteUrl: "https://juman-portfolio.onrender.com"
 };

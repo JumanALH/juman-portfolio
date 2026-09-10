@@ -284,6 +284,29 @@ body.is-paper .menu-btn{background:var(--paper)}
 .stage__state--done{color:var(--moss)}
 .stage__state--wip{color:var(--acc)}
 
+/* a chapter that is long enough to need its own numbered steps */
+.step{font:400 .75rem/1 var(--mono);color:var(--dim);letter-spacing:.01em;
+  margin:clamp(3rem,8vh,4.5rem) 0 clamp(1.4rem,3.5vh,2rem)}
+.step b{font-weight:500;color:var(--acc);margin-right:.7rem}
+.hui-head + .step{margin-top:0}
+
+/* the huí chapter reuses the case-study question, one size down */
+#chapter-03 .case-q h2{font-size:clamp(1.6rem,1rem + 2.5vw,2.7rem)}
+#chapter-03 .case-q{margin-bottom:clamp(2.2rem,5vh,3rem)}
+
+/* one figure on its own, not in the two-column grid */
+.shot--solo{max-width:44rem;margin:0 0 clamp(2rem,5vh,3rem)}
+
+/* a packaged desktop build has no address bar to draw */
+.win--app{gap:0}
+.win--app .win__url{margin-left:0;color:var(--acc);opacity:.85}
+
+.stages + .shots{margin-top:clamp(2.5rem,6vh,3.5rem)}
+.case-note + .shots{margin-top:clamp(1.8rem,4vh,2.5rem)}
+
+.ticks--learn{max-width:52rem}
+.ticks--learn li{padding-left:1.6rem;font-size:.9375rem}
+
 /* ---------- 04 ai ---------- */
 .ai-wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:start}
 .path{position:relative;padding-left:1.9rem}

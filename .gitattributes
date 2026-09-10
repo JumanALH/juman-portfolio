@@ -1,0 +1,8 @@
+# Text files keep LF in the repository regardless of the machine that commits
+# them. Render serves on Linux; the repo should not carry Windows line endings.
+* text=auto eol=lf
+
+*.webp binary
+*.png  binary
+*.jpg  binary
+*.ico  binary

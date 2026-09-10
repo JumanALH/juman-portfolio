@@ -2,7 +2,7 @@
 
 Personal site for **Juman Al-Huthaili** — Information Security student at the University of Hail.
 
-Live: https://juman-portfolio.vercel.app
+Live: https://juman-portfolio.onrender.com
 
 ---
 
@@ -30,7 +30,8 @@ That is a deliberate choice, not a shortcut. The site has no server-side data an
 routes, so a framework would add a build pipeline and a `node_modules` folder while making
 the page slower to load and harder to host. This version deploys by pushing a folder.
 
-Total page weight is roughly 130 KB including three screenshots.
+Total page weight is roughly 600 KB including nine screenshots, all of them lazy-loaded
+below the fold.
 
 ---
 
@@ -41,13 +42,13 @@ index.html            the whole site, one page, nine chapters
 404.html              custom not-found page
 robots.txt            search engine rules
 sitemap.xml           one URL, for search engines
-vercel.json           caching and security headers
+render.yaml           Render blueprint: static site, caching and security headers
 set-site-url.sh       swaps the site URL everywhere at once
 assets/
   css/style.css       all styling, with the colour tokens at the top
   js/config.js        ← EVERY LINK LIVES HERE. This is the file you edit.
   js/main.js          lattice canvas, chapter tracking, mobile menu
-  img/                screenshots, favicon, share image
+  img/                screenshots (gp-* GamePrice, hui-* Huí), favicon, share image
 ```
 
 ### Editing links
@@ -80,13 +81,29 @@ Then open http://localhost:8000
 
 ## Deploying
 
-1. Push this folder to a GitHub repository named `juman-portfolio`.
-2. On vercel.com, import that repository. No build command, no framework preset.
-3. If your final URL is not `juman-portfolio.vercel.app`, run:
+The site is hosted on **Render** as a Static Site. There is no build step, so the
+repository root is the publish directory.
+
+1. Push to `main` on `JumanALH/juman-portfolio`.
+2. On render.com: **New → Static Site**, connect the repository, then
+   - Branch: `main`
+   - Build command: *(empty)*
+   - Publish directory: `.`
+   - Auto-Deploy: on
+   `render.yaml` describes exactly this, so **New → Blueprint** works too.
+3. If the final URL is not `juman-portfolio.onrender.com`, run:
    ```bash
    bash set-site-url.sh https://your-real-url
    ```
    then commit and push. This keeps the canonical tag, share image and sitemap accurate.
+
+### One thing to never do again
+
+The first upload put every file in the repository root through the GitHub web
+uploader, which silently dropped the `assets/` folders. The HTML still asked for
+`assets/css/style.css`, so the deployed site loaded with no CSS, no JS and no
+images. **Keep the folder structure.** Push with git, not by dragging files into
+the browser.
 
 ---
 
@@ -99,4 +116,7 @@ runs h1 → h2 → h3 with no skips. Keyboard tab order is logical and focus is 
 place. Every outbound link was requested and confirmed to resolve.
 
 Nothing on this site is invented. The GamePrice screenshots were captured from the running
-application, and the numbers were counted from it rather than estimated.
+application and the numbers were counted from it rather than estimated. The Huí screenshots
+are real too: the three browser shots come from the Huí build running locally, and the three
+Unreal shots are unretouched captures from the packaged Unreal build at 2560×1440. The Huí
+project itself is not in this repository — only the optimised images the page needs.
