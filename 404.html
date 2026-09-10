@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nothing here — Juman Al-Huthaili</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500&family=Fraunces:opsz,wght@9..144,300&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&text=%E5%9B%9E&display=swap">
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+  .lost{min-height:100svh;display:flex;flex-direction:column;justify-content:center;gap:1.4rem}
+  .lost p.lost__glyph{font:400 clamp(3rem,10vw,6rem)/1 var(--cjk);color:var(--acc)}
+  .lost h1{font-family:var(--serif);font-weight:300;font-size:clamp(1.8rem,1.1rem + 3vw,3.2rem);
+    line-height:1.1;letter-spacing:-.02em;max-width:18ch}
+  .lost p{color:var(--dim);max-width:42ch}
+  .lost p.lost__path{font:400 .8125rem/1 var(--mono);color:var(--acc)}
+</style>
+</head>
+<body class="is-ready">
+<div class="frame" aria-hidden="true">
+  <span class="frame__edge frame__edge--t"></span><span class="frame__edge frame__edge--r"></span>
+  <span class="frame__edge frame__edge--b"></span><span class="frame__edge frame__edge--l"></span>
+</div>
+<header class="hud"><p class="hud__name">Juman Al-Huthaili</p><p class="hud__glyph" aria-hidden="true">回</p></header>
+
+<main class="chapter lost">
+  <p class="lost__glyph" aria-hidden="true">回</p>
+  <h1>You went out and came back to a page that isn't here.</h1>
+  <p class="lost__path" id="path"></p>
+  <p>Nothing at this address. The way back is one click away.</p>
+  <p class="entry__actions"><a class="btn btn--primary" href="/">Return to the start</a></p>
+</main>
+
+<script>
+  document.getElementById('path').textContent = location.pathname;
+</script>
+</body>
+</html>
