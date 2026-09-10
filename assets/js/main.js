@@ -88,6 +88,82 @@
     });
   }
 
+  /* --- 4b. scroll reveal --------------------------------------
+     Content arrives as you reach it, in the order it reads. The
+     .rv-on switch is only set when the browser can observe AND the
+     visitor has not asked for less motion, so a failure here leaves
+     a completely visible page rather than a blank one.            */
+  if (!reduced && 'IntersectionObserver' in window) {
+    document.body.classList.add('rv-on');
+
+    // Each entry is [container selector, selector of the things inside it
+    // that should arrive one after another].
+    var GROUPS = [
+      ['.chapter', '.mark, .h-lead, .step'],
+      ['.chapter--entry', '.gloss'],
+      ['#chapter-01', '.open-desk article, .figuring'],
+      ['#chapter-02', '.case-q, .system, .case-does, .counts, .case-note, .entry__actions'],
+      ['#chapter-03', '.hui-head, .case-q, .shot, .stage, .case-note, .ticks--learn li'],
+      ['#chapter-04', '.path li, .creed, .case-note'],
+      ['#chapter-05', '.panel'],
+      ['#chapter-06', '.time li'],
+      ['#chapter-07', '.tools > section'],
+      ['#chapter-08', '.links li, .foot']
+    ];
+
+    var revealed = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        revealed.unobserve(e.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+    GROUPS.forEach(function (pair) {
+      document.querySelectorAll(pair[0]).forEach(function (scope) {
+        var items = scope.querySelectorAll(pair[1]);
+        items.forEach(function (el, i) {
+          if (el.classList.contains('rv')) return;   // claimed by an earlier group
+          el.classList.add('rv');
+          // stagger, but never long enough to feel like waiting
+          var d = Math.min(i * 70, 420);
+          if (d) el.style.transitionDelay = d + 'ms';
+          revealed.observe(el);
+        });
+      });
+    });
+
+    // .shot needs is-in for the image wipe even though it is also .rv
+    document.querySelectorAll('.shot').forEach(function (el) { revealed.observe(el); });
+  }
+
+  /* --- 4c. the GamePrice figures count up, once ----------------- */
+  if (!reduced && 'IntersectionObserver' in window) {
+    var counters = document.querySelectorAll('.counts dd.num');
+    if (counters.length) {
+      var countIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          countIo.unobserve(e.target);
+          var el = e.target;
+          var target = parseInt(el.textContent, 10);
+          if (isNaN(target)) return;
+          if (target === 0) return;                 // "0 stale prices" reads better still
+          var t0 = performance.now(), dur = 900;
+          el.textContent = '0';
+          (function step(now) {
+            var k = Math.min((now - t0) / dur, 1);
+            k = 1 - Math.pow(1 - k, 3);             // ease out
+            el.textContent = String(Math.round(target * k));
+            if (k < 1) requestAnimationFrame(step);
+            else el.textContent = String(target);
+          })(t0);
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(function (el) { countIo.observe(el); });
+    }
+  }
+
   /* --- 5. mobile chapter index --------------------------------- */
   var btn = document.getElementById('menuBtn');
   var menu = document.getElementById('menu');

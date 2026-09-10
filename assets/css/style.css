@@ -307,6 +307,9 @@ body.is-paper .menu-btn{background:var(--paper)}
 .ticks--learn{max-width:52rem}
 .ticks--learn li{padding-left:1.6rem;font-size:.9375rem}
 
+/* the Huí world shots are panoramas: let them use the whole column */
+#chapter-03 .shots .shot--wide{max-width:100%}
+
 /* ---------- 04 ai ---------- */
 .ai-wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:start}
 .path{position:relative;padding-left:1.9rem}
@@ -372,6 +375,39 @@ body.is-paper .menu-btn{background:var(--paper)}
 .foot__meta{font:400 .75rem/1.4 var(--mono);color:var(--dim)}
 
 /* =========================================================
+   scroll reveal
+   -----------------------------------------------------------
+   Every rule here is scoped under .rv-on, which main.js only adds
+   when IntersectionObserver exists AND motion is allowed. If the
+   script never runs, nothing below applies and the page is simply
+   already visible. Nothing important is hidden behind an animation.
+   ========================================================= */
+.rv-on .rv{opacity:0;transform:translateY(20px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv-on .rv.is-in{opacity:1;transform:none}
+
+/* a chapter number draws its own rule out to the right as it arrives */
+.mark,.step{position:relative}
+.mark::after,.step::after{content:"";position:absolute;top:50%;margin-left:1.1rem;
+  width:clamp(2.5rem,7vw,6rem);height:1px;background:var(--line-2);
+  transform-origin:left;transform:scaleX(1)}
+.rv-on .mark::after,.rv-on .step::after{transform:scaleX(0);
+  transition:transform .9s var(--ease) .25s}
+.rv-on .mark.is-in::after,.rv-on .step.is-in::after{transform:scaleX(1)}
+
+/* screenshots wipe open from the top instead of just fading in */
+.rv-on .shot img{clip-path:inset(0 0 100% 0);transform:scale(1.035)}
+.rv-on .shot.is-in img{clip-path:inset(0 0 0 0);transform:none;
+  transition:clip-path 1.05s var(--ease),transform 1.3s var(--ease)}
+.shot img{transition:transform .55s var(--ease)}
+.shot:hover img,.rv-on .shot.is-in:hover img{transform:scale(1.014)}
+.shot .win{transition:border-color .4s var(--ease)}
+.shot:hover .win{border-color:var(--acc)}
+
+/* the live figure counts up to its real value once, when you reach it */
+.counts dd.num{font-variant-numeric:tabular-nums}
+
+/* =========================================================
    responsive
    ========================================================= */
 @media (max-width:1100px){
@@ -430,4 +466,7 @@ body.is-paper .menu-btn{background:var(--paper)}
   .node{opacity:1;transform:none}
   .flow__arrow{opacity:1}
   .rings rect{transform:none;opacity:1}
+  .rv{opacity:1!important;transform:none!important}
+  .shot img{clip-path:none!important;transform:none!important}
+  .mark::after,.step::after{transform:scaleX(1)!important}
 }
